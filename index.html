@@ -1,0 +1,412 @@
+<title>Bulle Burger</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Outfit:wght@400;500;600;700&display=swap">
+<style>
+/* Concept : pop-sticker rose, contours encre, ombres dures. Le grand B qui coule est le seul moment spectaculaire. */
+:root {
+  --pink: #ff4f9a;
+  --pink-2: #ff86b9;
+  --blush: #ffdbe9;
+  --cream: #fff3e6;
+  --ink: #2b0d1c;
+  --yellow: #ffd02e;
+  --bun: #f2a14a;
+  --display: "Bagel Fat One", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --body: "Outfit", "Segoe UI", system-ui, sans-serif;
+  --ease: cubic-bezier(.32,.72,0,1);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--cream); color: var(--ink); font: 400 17px/1.6 var(--body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 40; background: var(--pink); }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; line-height: .98; margin: 0; text-wrap: balance; letter-spacing: .005em; }
+p { margin: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; border-radius: 8px; }
+
+.wrap { width: 100%; max-width: 1180px; margin: 0 auto; padding-inline: max(16px, env(safe-area-inset-left, 0px)) max(16px, env(safe-area-inset-right, 0px)); }
+section { padding-block: 96px; position: relative; }
+.tag { display: inline-block; font: 600 13px/1 var(--body); letter-spacing: .14em; text-transform: uppercase; background: var(--ink); color: var(--cream); padding: 9px 14px; border-radius: 999px; }
+h2 { font-size: clamp(38px, 6.4vw, 76px); margin-top: 18px; }
+
+.btn { display: inline-flex; align-items: center; gap: 12px; padding: 15px 15px 15px 26px; border-radius: 999px; border: 3px solid var(--ink); background: var(--yellow); color: var(--ink); font: 700 17px/1 var(--body); box-shadow: 5px 5px 0 var(--ink); transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+.btn i { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: var(--yellow); display: grid; place-items: center; font-style: normal; transition: transform .35s var(--ease); }
+.btn:hover { transform: translate(-2px,-2px); box-shadow: 8px 8px 0 var(--ink); }
+.btn:hover i { transform: translate(2px,-2px) rotate(-8deg); }
+.btn:active { transform: translate(3px,3px); box-shadow: 2px 2px 0 var(--ink); }
+.btn.alt { background: var(--cream); padding: 15px 26px; }
+
+/* Header */
+header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30; padding-top: 12px; pointer-events: none; }
+.pill { pointer-events: auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 0 auto; max-width: 880px; background: var(--cream); border: 3px solid var(--ink); border-radius: 999px; padding: 8px 8px 8px 18px; box-shadow: 4px 4px 0 var(--ink); }
+.brand { display: flex; align-items: center; gap: 10px; font: 400 22px/1 var(--display); }
+.brand svg { width: 28px; height: 32px; }
+.pill nav { display: flex; gap: 26px; font-weight: 600; font-size: 15px; }
+.pill nav a:hover { color: var(--pink); }
+.pill .btn { padding: 11px 11px 11px 20px; font-size: 15px; box-shadow: 3px 3px 0 var(--ink); }
+.pill .btn i { width: 28px; height: 28px; }
+
+/* Hero */
+.hero { background: var(--pink); margin-top: -68px; padding-top: 168px; padding-bottom: 72px; overflow: hidden;
+  background-image: radial-gradient(var(--pink-2) 2.5px, transparent 3px); background-size: 28px 28px; }
+.hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 24px; align-items: center; }
+.hero h1 { font-size: clamp(54px, 10.5vw, 148px); color: var(--cream); text-shadow: 5px 5px 0 var(--ink); -webkit-text-stroke: 2px var(--ink); paint-order: stroke fill; margin-top: 22px; }
+.hero h1 span { color: var(--yellow); }
+.hero .lead { margin-top: 28px; max-width: 30em; font-size: 20px; font-weight: 500; color: var(--ink); }
+.cta { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 36px; }
+.bwrap { position: relative; display: grid; place-items: center; min-width: 0; }
+.bigB { width: min(100%, 430px); height: auto; overflow: visible; filter: drop-shadow(14px 14px 0 var(--ink)); }
+.drip { transform-box: fill-box; transform-origin: 50% 0; animation: drip 4.5s var(--ease) infinite alternate; }
+.drip:nth-of-type(2) { animation-delay: -1.4s; animation-duration: 5.6s; }
+.drip:nth-of-type(3) { animation-delay: -2.8s; animation-duration: 3.9s; }
+@keyframes drip { from { transform: scaleY(.62); } to { transform: scaleY(1); } }
+.badge { position: absolute; right: -2%; top: 2%; width: 132px; height: 132px; animation: spin 18s linear infinite; }
+.badge text { font: 700 15px var(--body); letter-spacing: .12em; fill: var(--ink); }
+@keyframes spin { to { transform: rotate(360deg); } }
+.badge-c { position: absolute; right: calc(-2% + 38px); top: calc(2% + 36px); width: 56px; height: 56px; border-radius: 50%; background: var(--yellow); border: 3px solid var(--ink); display: grid; place-items: center; font: 400 28px/1 var(--display); }
+
+/* Marquee */
+.marq { background: var(--ink); color: var(--cream); border-block: 3px solid var(--ink); overflow: hidden; padding-block: 18px; transform: rotate(-1.2deg); margin-block: -6px; position: relative; z-index: 5; }
+.track { display: flex; width: max-content; animation: mq 28s linear infinite; }
+.track span { font: 400 clamp(26px, 4vw, 40px)/1 var(--display); padding-inline: 22px; white-space: nowrap; }
+.track span:nth-child(even) { color: var(--pink); }
+@keyframes mq { to { transform: translateX(-50%); } }
+
+/* Menu */
+.menu-head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 28px; }
+.tabs { display: flex; flex-wrap: wrap; gap: 10px; }
+.tabs button { border: 3px solid var(--ink); background: var(--cream); border-radius: 999px; padding: 11px 20px; font-weight: 700; transition: background .3s var(--ease), transform .3s var(--ease); }
+.tabs button[aria-selected="true"] { background: var(--pink); color: var(--cream); box-shadow: 3px 3px 0 var(--ink); transform: translate(-1px,-1px); }
+.grid { --cols: var(--n, 3); display: grid; grid-template-columns: repeat(var(--cols), 1fr); gap: 22px; margin-top: 48px; }
+.item { border: 3px solid var(--ink); border-radius: 28px; background: #fff; overflow: hidden; display: flex; flex-direction: column; min-width: 0; box-shadow: 6px 6px 0 var(--ink); transition: transform .45s var(--ease), box-shadow .45s var(--ease); }
+.item:hover { transform: translate(-3px,-3px) rotate(-.6deg); box-shadow: 10px 10px 0 var(--ink); }
+.thumb { aspect-ratio: 4/3; padding: 14px; display: grid; place-items: center; border-bottom: 3px solid var(--ink); background: var(--c, var(--blush)); }
+.thumb svg { width: 52%; max-height: 82%; }
+.thumb img { max-width: 92%; max-height: 100%; width: auto; height: auto; object-fit: contain; filter: drop-shadow(6px 6px 0 var(--ink)); transition: transform .5s var(--ease); }
+.item:hover .thumb img { transform: scale(1.05) rotate(-1.5deg); }
+.thumb .mini { width: 26%; }
+.info { padding: 22px 24px 26px; display: grid; gap: 10px; }
+.row { display: flex; justify-content: space-between; align-items: start; gap: 14px; }
+.item h3 { font-size: 26px; }
+.price { font: 400 22px/1 var(--display); background: var(--yellow); border: 3px solid var(--ink); border-radius: 999px; padding: 6px 12px; white-space: nowrap; }
+.info p { font-size: 15px; opacity: .78; }
+.diet.hot { background: var(--yellow); }
+.pr { display: grid; justify-items: end; gap: 6px; }
+.menup { font-size: 13px; font-weight: 700; background: var(--ink); color: var(--cream); border-radius: 999px; padding: 4px 10px; white-space: nowrap; }
+.item.wide { grid-column: 1 / -1; flex-direction: row; background: var(--pink); }
+.item.wide .info { padding: 28px 32px; flex: 1; align-content: center; }
+.item.wide h3 { font-size: clamp(30px, 4vw, 48px); color: var(--cream); }
+.drinks { display: grid; grid-template-columns: repeat(4, auto); gap: 10px 36px; font-weight: 700; margin-top: 8px; justify-content: start; }
+.drinks b { font-family: var(--display); font-weight: 400; font-size: 24px; display: block; line-height: 1; }
+.heroburger { position: absolute; left: -22%; bottom: -6%; width: 74%; height: auto; transform: rotate(-6deg); filter: drop-shadow(8px 8px 0 var(--ink)); }
+.note { margin-top: 28px; font-size: 14px; opacity: .65; }
+
+/* Services */
+.tagrow { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.tagrow span { border: 3px solid var(--ink); background: var(--cream); border-radius: 999px; padding: 8px 16px; font-weight: 700; font-size: 15px; }
+.diet { display: inline-block; margin-top: 4px; justify-self: start; background: #d6f2c1; border: 3px solid var(--ink); border-radius: 999px; padding: 3px 12px; font-weight: 700; font-size: 13px; }
+.deliver { background: var(--blush); border-block: 3px solid var(--ink); }
+.ways { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 48px; }
+.way { border: 3px solid var(--ink); border-radius: 28px; background: #fff; padding: 30px; box-shadow: 6px 6px 0 var(--ink); min-width: 0; }
+.way h3 { font-size: 30px; }
+.way p { margin-top: 12px; font-size: 16px; opacity: .8; }
+.way .dot { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--pink); border: 3px solid var(--ink); margin-bottom: 22px; }
+.way .dot svg { width: 28px; height: 28px; fill: none; stroke: var(--cream); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.club { background: var(--yellow); border-bottom: 3px solid var(--ink); padding-block: 72px; }
+.club-in { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; }
+.club h2 { margin-top: 0; font-size: clamp(34px, 5vw, 60px); }
+.club p { margin-top: 14px; font-weight: 500; max-width: 30em; }
+.mail { display: flex; gap: 10px; flex-wrap: wrap; }
+.mail input { flex: 1 1 220px; min-width: 0; }
+input, select { width: 100%; font: inherit; color: var(--ink); background: #fff; border: 3px solid var(--ink); border-radius: 16px; padding: 13px 16px; }
+input:focus, select:focus { outline: none; box-shadow: 4px 4px 0 var(--ink); }
+.msg { display: none; margin-top: 14px; font-weight: 700; }
+.rform { display: grid; gap: 14px; margin-top: 22px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.rform label { display: grid; gap: 6px; font-weight: 700; font-size: 14px; min-width: 0; }
+
+/* Infos */
+.visit { background: var(--ink); color: var(--cream); }
+.visit-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; }
+.visit h2 { color: var(--pink); }
+.hours { margin: 34px 0 0; padding: 0; list-style: none; display: grid; gap: 0; max-width: 460px; }
+.hours li { display: flex; justify-content: space-between; gap: 16px; padding-block: 14px; border-bottom: 2px dashed rgba(255,243,230,.25); font-weight: 500; }
+.hours li b { color: var(--yellow); font-weight: 600; }
+.card { background: var(--pink); color: var(--ink); border: 3px solid var(--cream); border-radius: 32px; padding: 34px; box-shadow: 8px 8px 0 var(--pink-2); align-self: start; }
+.card h3 { font-size: 36px; }
+.card p { margin-top: 14px; font-weight: 500; }
+.card .btn { margin-top: 26px; }
+.todo { display: inline-block; background: var(--cream); border-radius: 8px; padding: 1px 8px; font-weight: 600; }
+
+footer { background: var(--pink); border-top: 3px solid var(--ink); padding-block: 56px 28px; overflow: hidden; }
+.word { font: 400 clamp(56px, 15vw, 210px)/.9 var(--display); color: var(--cream); -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; text-shadow: 6px 6px 0 var(--ink); text-align: center; white-space: nowrap; }
+.fine { display: flex; flex-wrap: wrap; gap: 10px 28px; justify-content: space-between; margin-top: 36px; font-weight: 600; font-size: 14px; }
+
+@media (max-width: 900px) {
+  section { padding-block: 72px; }
+  .pill nav { display: none; }
+  .hero { padding-top: 138px; }
+  .hero-grid, .build-grid, .visit-grid { grid-template-columns: 1fr; gap: 40px; }
+  .bwrap { order: -1; max-width: 300px; margin: 0 auto 30px; }
+  .heroburger { left: -14%; }
+  .item.wide { flex-direction: column; }
+  .drinks { grid-template-columns: repeat(2, auto); }
+  .grid { --cols: 2; }
+}
+@media (max-width: 600px) {
+  .grid { --cols: 1; }
+  .badge { width: 96px; height: 96px; right: -4%; }
+  .badge-c { display: none; }
+  .hero h1 { -webkit-text-stroke-width: 1.5px; text-shadow: 3px 3px 0 var(--ink); }
+  .total b { font-size: 44px; }
+  .card { padding: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <path id="Bshape" fill-rule="evenodd" d="M50 40H220C300 40 340 85 340 140C340 180 318 208 288 222C332 236 360 270 360 320C360 390 310 440 230 440H50Z M130 100H205C235 100 252 118 252 142C252 166 235 184 205 184H130Z M130 252H215C250 252 272 274 272 306C272 338 250 380 215 380H130Z"/>
+    <symbol id="burger" viewBox="0 0 300 250">
+      <path d="M32 104C32 30 268 30 268 104Z" fill="var(--bun)" stroke="#2b0d1c" stroke-width="6" stroke-linejoin="round"/>
+      <g fill="#fff3e6"><ellipse cx="100" cy="66" rx="9" ry="5"/><ellipse cx="150" cy="54" rx="9" ry="5"/><ellipse cx="200" cy="68" rx="9" ry="5"/><ellipse cx="125" cy="86" rx="9" ry="5"/><ellipse cx="175" cy="88" rx="9" ry="5"/></g>
+      <path d="M22 112q14-14 28 0t28 0t28 0t28 0t28 0t28 0t28 0t28 0v16H22Z" fill="var(--leaf)" stroke="#2b0d1c" stroke-width="6" stroke-linejoin="round"/>
+      <rect x="38" y="130" width="224" height="18" rx="9" fill="#ff4a4a" stroke="#2b0d1c" stroke-width="6"/>
+      <path d="M30 148H270V156H246L236 180L226 156H84L72 176L60 156H30Z" fill="var(--cheese)" stroke="#2b0d1c" stroke-width="6" stroke-linejoin="round"/>
+      <rect x="28" y="156" width="244" height="32" rx="16" fill="var(--patty)" stroke="#2b0d1c" stroke-width="6"/>
+      <path d="M36 192H264V204C264 226 248 236 228 236H72C52 236 36 226 36 204Z" fill="var(--bun)" stroke="#2b0d1c" stroke-width="6" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="mini" viewBox="0 0 420 600">
+      <use href="#Bshape" fill="#fff3e6" stroke="#2b0d1c" stroke-width="12" stroke-linejoin="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="wrap">
+    <div class="pill">
+      <a href="#haut" class="brand" aria-label="Bulle Burger, accueil">
+        <svg viewBox="0 0 420 600" aria-hidden="true"><use href="#Bshape" fill="#ff4f9a" stroke="#2b0d1c" stroke-width="30" stroke-linejoin="round"/><rect x="80" y="420" width="42" height="130" rx="21" fill="#ff4f9a" stroke="#2b0d1c" stroke-width="26"/><use href="#Bshape" fill="#ff4f9a"/></svg>
+        Bulle Burger
+      </a>
+      <nav aria-label="Navigation principale"><a href="#menu">La carte</a><a href="#livraison">Livraison</a><a href="#venir">Réserver</a></nav>
+      <a href="#livraison" class="btn">Commander <i>↗</i></a>
+    </div>
+  </div>
+</header>
+
+<main id="haut">
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="tag">Smash burgers · Orléans</span>
+      <h1>Viande fraîche. <span>Qualité supérieure.</span></h1>
+      <p class="lead">Chez nous, l'excellence est notre norme. Des smash burgers à Orléans, sur place ou à emporter.</p>
+      <div class="cta">
+        <a href="#menu" class="btn">Voir la carte <i>↗</i></a>
+        <a href="#livraison" class="btn alt">Se faire livrer</a>
+      </div>
+      <div class="tagrow"><span>Sur place</span><span>À emporter</span><span>Options vegan</span><span>Viande halal</span></div>
+    </div>
+    <div class="bwrap">
+      <svg class="bigB" viewBox="0 0 420 600" role="img" aria-label="Le B de Bulle Burger, qui dégouline">
+        <g fill="#fff3e6" stroke="#2b0d1c" stroke-width="10" stroke-linejoin="round">
+          <rect class="drip" x="80" y="430" width="42" height="112" rx="21"/>
+          <rect class="drip" x="178" y="430" width="32" height="64" rx="16"/>
+          <rect class="drip" x="272" y="430" width="44" height="150" rx="22"/>
+          <use href="#Bshape"/>
+        </g>
+        <g fill="#fff3e6"><rect x="86" y="426" width="30" height="26"/><rect x="183" y="426" width="22" height="22"/><rect x="278" y="426" width="32" height="26"/></g>
+        <rect x="72" y="74" width="14" height="250" rx="7" fill="#ffdbe9"/>
+        <circle cx="318" cy="96" r="8" fill="#ffdbe9"/>
+      </svg>
+      <svg class="badge" viewBox="0 0 140 140" aria-hidden="true">
+        <defs><path id="circ" d="M70 70m-52 0a52 52 0 1 1 104 0a52 52 0 1 1-104 0"/></defs>
+        <circle cx="70" cy="70" r="68" fill="#fff3e6" stroke="#2b0d1c" stroke-width="3"/>
+        <text><textPath href="#circ">FAIT MAISON • ORLÉANS • FAIT MAISON • ORLÉANS •</textPath></text>
+      </svg>
+      <div class="badge-c" aria-hidden="true">B</div>
+      <img class="heroburger" src="img/bbr.webp" alt="Burger BBR" width="640" height="482">
+    </div>
+  </div>
+</section>
+
+<div class="marq" aria-hidden="true">
+  <div class="track" id="track"></div>
+</div>
+
+<section id="menu">
+  <div class="wrap">
+    <div class="menu-head">
+      <div><span class="tag">Menu</span><h2>Notre carte</h2></div>
+      <div class="tabs" role="tablist" aria-label="Catégories" id="tabs"></div>
+    </div>
+    <div class="grid" id="grid" role="tabpanel"></div>
+    <p class="note">Carte et photos issues de la carte PDF du restaurant. Le premier prix est celui du burger, le second celui du menu (boisson, frites ou salade inclus).</p>
+  </div>
+</section>
+
+<section id="livraison" class="deliver">
+  <div class="wrap">
+    <span class="tag">Livraison</span>
+    <h2>Se faire livrer</h2>
+    <div class="ways">
+      <article class="way"><span class="dot"><svg viewBox="0 0 24 24"><path d="M4 11h16v2a8 8 0 01-16 0zM8 7c0-2 2-2 2-4M13 7c0-2 2-2 2-4"/></svg></span><h3>Sur place</h3><p>Venez vivre une expérience gourmande avec nous !</p></article>
+      <article class="way"><span class="dot"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6zM9 8a3 3 0 016 0"/></svg></span><h3>À emporter</h3><p>Commandez et récupérez votre repas au restaurant.</p></article>
+      <article class="way"><span class="dot"><svg viewBox="0 0 24 24"><path d="M3 16V7h10v9M13 10h4l4 3v3h-3M3 16h2M9 16h4M19 16h-1"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg></span><h3>Livré</h3><p>Se faire livrer chez vous. <span class="todo">[À REMPLACER] lien de commande</span></p></article>
+    </div>
+    <p class="note">Services à confirmer avec le restaurant avant la mise en ligne.</p>
+  </div>
+</section>
+
+<section class="club">
+  <div class="wrap club-in">
+    <div>
+      <h2>Rejoindre le club</h2>
+      <p>Des offres spéciales réservées aux abonnés.</p>
+    </div>
+    <form id="club" novalidate>
+      <div class="mail">
+        <input id="clubmail" type="email" placeholder="vous@email.fr" autocomplete="email" aria-label="Votre e-mail" required>
+        <button class="btn" type="submit" style="background:var(--ink);color:var(--cream);box-shadow:5px 5px 0 var(--pink)">S'inscrire <i style="background:var(--yellow);color:var(--ink)">↗</i></button>
+      </div>
+      <p class="msg" id="clubmsg" role="status">Merci ! Inscription de démonstration, elle sera reliée à la vraie liste à la mise en ligne.</p>
+    </form>
+  </div>
+</section>
+
+<section id="venir" class="visit">
+  <div class="wrap visit-grid">
+    <div>
+      <span class="tag" style="background:var(--pink);color:var(--ink)">Réservation</span>
+      <h2>Contact &amp; Réservation</h2>
+      <ul class="hours">
+        <li><span>Lundi – Jeudi</span><b>11h30 – 14h30 · 18h30 – 22h</b></li>
+        <li><span>Vendredi – Samedi</span><b>11h30 – 14h30 · 18h30 – 23h</b></li>
+        <li><span>Dimanche</span><b>18h30 – 22h</b></li>
+      </ul>
+      <p class="note" style="color:var(--cream)">Horaires d'exemple <span class="todo" style="color:var(--ink)">[À REMPLACER]</span></p>
+    </div>
+    <div class="card">
+      <h3>Réserver une table</h3>
+      <form class="rform" id="resa" novalidate>
+        <label for="rn">Nom<input id="rn" type="text" placeholder="Votre nom" autocomplete="name" required></label>
+        <label for="rt">Téléphone<input id="rt" type="tel" placeholder="06 00 00 00 00" autocomplete="tel" required></label>
+        <div class="two">
+          <label for="rd">Date<input id="rd" type="date" required></label>
+          <label for="rp">Personnes<select id="rp"><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7+</option></select></label>
+        </div>
+        <button class="btn alt" type="submit" style="justify-self:start">Demander une table <i style="background:var(--ink);color:var(--cream)">↗</i></button>
+        <p class="msg" id="resamsg" role="status">Demande de démonstration : le formulaire sera relié au restaurant à la mise en ligne.</p>
+      </form>
+      <p style="font-size:14px">Adresse : <span class="todo">[À REMPLACER]</span> · Tél. <span class="todo">[À REMPLACER]</span></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="word" aria-hidden="true">Bulle Burger</div>
+    <div class="fine"><span>Nos buns sont réalisés par notre artisan boulanger. Produits frais et faits maison.</span><span>Instagram · Facebook · Tripadvisor <span class="todo">[À REMPLACER]</span></span></div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var eur = function (n) { return n.toFixed(2).replace('.', ',') + ' €'; };
+
+  // Bandeau
+  var words = ['Smash', 'Chicken', 'Vegan', 'Double cheesy', 'Mont BBR', 'Tenders', 'B-Cheese', 'Camembert frit'];
+  var html = '';
+  for (var r = 0; r < 4; r++) words.forEach(function (w) { html += '<span>' + w + '</span><span>✺</span>'; });
+  document.getElementById('track').innerHTML = html;
+
+  // Carte (source : carte PDF du restaurant)
+  var BUN = 'Bun brioché ultra moelleux ';
+  var data = {
+    'Burgers': [
+      { n: 'ORIGINAL', p: '8,90 €', m: '11,90 €', img: 'original', alt: 'Burger Original',
+        d: BUN + 'nappé de notre fameuse sauce burger ultra gourmande, deux steaks de bœuf français bien caramélisés, cheddar fondu, salade, tomate, oignon rouge et pickles maison.' },
+      { n: 'DOUBLE CHEESY', p: '9,90 €', m: '12,90 €', img: 'double-cheesy', alt: 'Burger Double Cheesy', t: 'Triple le pour 2 € de +',
+        d: BUN + 'nappé de notre délicieuse sauce cheddar maison ultra crémeuse, deux steaks de bœuf français bien caramélisés, cheddar fondu et pickles maison.' },
+      { n: 'CHICKEN', p: '10,90 €', m: '13,90 €', img: 'chicken', alt: 'Burger Chicken', t: 'Piquant',
+        d: BUN + 'nappé de notre savoureuse sauce sriracha maison, filet de poulet pané mariné maison, cheddar fondu, salade, coleslaw revisité.' },
+      { n: 'VEGAN', p: '11,90 €', m: '14,90 €', img: 'vegan', alt: 'Burger Vegan', t: 'Vegan',
+        d: BUN + 'nappé de notre merveilleuse sauce vegan, suprême végétal, cheddar vegan, salade, coleslaw revisité.' },
+      { n: 'BBR', p: '11,90 €', m: '14,90 €', img: 'bbr', alt: 'Burger BBR', t: 'Best seller', hot: 1,
+        d: BUN + 'nappé de notre fameuse sauce BBR rose ultra gourmande, deux steaks de bœuf français bien caramélisés, cheddar fondu, salade, tomate, oignon rouge et pickles maison.' },
+      { n: 'MONT BBR', p: '12,90 €', m: '15,90 €', img: 'mont-bbr', alt: 'Burger Mont BBR',
+        d: '2 steaks smashés, servis dans un bun avec une galette de pomme de terre bien gourmande, du fromage raclette français, un bacon de bœuf et notre super sauce poivre.' }
+    ],
+    'Formules': [
+      { n: 'MENU TENDERS', p: '14,90 €', img: 'tenders', alt: 'Tender', d: '5 tenders, un side, 2 sauces, 1 boisson.' },
+      { n: 'MENU BABY BBR', p: '8,90 €', img: 'original', alt: 'Baby smash', d: '1 baby smash ou 3 tenders, 1 frites, 1 boisson.' },
+      { n: 'COIN PETITE FAIM', p: '5,00 €', d: 'Baby Original, Baby Chicken ou Baby Mont BBR.' },
+      { n: 'MENU BURGER', d: 'Chaque burger existe en menu : boisson, frites ou salade inclus. Le prix menu est indiqué à côté du prix du burger.' },
+      { n: 'LE TRIPLE', p: '+ 2 €', d: 'Triple le burger de votre choix.' },
+      { n: 'SAUCEZ-VOUS', p: '+ 1 €', d: 'Originale · Sriracha · BBR · Blanche vegan · Piquante.' }
+    ],
+    'Sides': [
+      { n: 'FRITES', p: '3,90 €', img: 'frites', alt: 'Frites' },
+      { n: 'FRITES BBR', p: '7,90 €', img: 'frites-bbr', alt: 'Frites BBR', d: 'Frites, sauce cheddar maison, topping oignons frits et bacon.' },
+      { n: 'B-CHEESE', p: '5,90 / 8,90 / 11,90 €', img: 'b-cheese', alt: 'B-Cheese', d: 'Chaussons façon rösti garnis de fromage frais aux fines herbes. X4 · X8 · X12.' },
+      { n: 'COLESLAW MAISON', p: '3,90 €', img: 'coleslaw', alt: 'Coleslaw maison', t: 'Vegan' },
+      { n: 'TENDERS', p: '5,90 / 9,90 / 14,90 €', img: 'tenders', alt: 'Tender', d: 'X3 · X6 · X9.' },
+      { n: 'CAMEMBERT FRIT', p: '4,90 / 7,90 / 10,90 €', img: 'camembert', alt: 'Camembert frit', d: 'X6 · X10 · X14.' }
+    ],
+    'Desserts & boissons': [
+      { n: 'MILKSHAKES', p: '5,90 €', img: 'milkshake', alt: 'Milkshake', d: 'Chocolat · Vanille · Fraise · Pistache.' },
+      { n: 'GLACE EN POT', p: '3,00 €', d: 'En pot ou bâtonné, selon les parfums du moment.' },
+      { n: 'COOKIE ARTISANAL', p: '3,90 €', img: 'cookie', alt: 'Cookie artisanal' },
+      { n: 'TARTE CITRON OU DAIM', p: '3,90 €' },
+      { n: 'MUFFIN', p: '3,00 €' },
+      { n: 'TIRAMISU MAISON', p: '3,90 €', img: 'tiramisu', alt: 'Tiramisu maison', d: 'Selon les parfums du moment.' },
+      { wide: 1, n: 'UNE PETITE SOIF ?', drinks: [['Expresso', '1,50 €'], ['Limonade', '3,00 €'], ['Soda', '2,00 €'], ['Eau', '1,50 €']] }
+    ]
+  };
+  var tabs = document.getElementById('tabs'), grid = document.getElementById('grid');
+  var tints = ['#ffdbe9', '#ffe9a8', '#ffc7a8', '#d6f2c1'];
+  function card(it, i) {
+    if (it.wide) {
+      return '<article class="item wide"><div class="info"><h3>' + it.n + '</h3><div class="drinks">' +
+        it.drinks.map(function (d) { return '<span>' + d[0] + '<b>' + d[1] + '</b></span>'; }).join('') + '</div></div></article>';
+    }
+    var thumb = it.img
+      ? '<img src="img/' + it.img + '.webp" alt="' + it.alt + '" loading="lazy">'
+      : '<svg class="mini" viewBox="0 0 420 600" aria-hidden="true" style="filter:drop-shadow(8px 8px 0 #2b0d1c)"><use href="#mini"/></svg>';
+    return '<article class="item"><div class="thumb" style="--c:' + tints[i % 4] + '">' + thumb + '</div><div class="info"><div class="row"><h3>' + it.n + '</h3>' +
+      (it.p ? '<span class="pr"><span class="price">' + it.p + '</span>' + (it.m ? '<span class="menup">Menu ' + it.m + '</span>' : '') + '</span>' : '') +
+      '</div>' + (it.d ? '<p>' + it.d + '</p>' : '') +
+      (it.t ? '<span class="diet' + (it.hot ? ' hot' : '') + '">' + it.t + '</span>' : '') + '</div></article>';
+  }
+  function show(cat) {
+    Array.prototype.forEach.call(tabs.children, function (b) { b.setAttribute('aria-selected', b.textContent === cat); });
+    var list = data[cat];
+    var count = list.filter(function (x) { return !x.wide; }).length;
+    grid.style.setProperty('--n', count === 4 ? 2 : Math.min(count, 3));
+    grid.innerHTML = list.map(card).join('');
+  }
+  Object.keys(data).forEach(function (cat) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('role', 'tab'); b.textContent = cat;
+    b.addEventListener('click', function () { show(cat); });
+    tabs.appendChild(b);
+  });
+  show('Burgers');
+
+  // Formulaires de démonstration
+  function demo(formId, msgId) {
+    var f = document.getElementById(formId);
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!f.checkValidity()) { f.reportValidity(); return; }
+      document.getElementById(msgId).style.display = 'block';
+      f.reset();
+    });
+  }
+  demo('club', 'clubmsg');
+  demo('resa', 'resamsg');
+})();
+</script>
